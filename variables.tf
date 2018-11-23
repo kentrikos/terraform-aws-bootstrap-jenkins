@@ -1,10 +1,14 @@
-variable "name" {
-  description = "(Required) Name of the instance"
+variable "product_domain_name" {
+  description = "(Required) Name of product domain, will be used to create other names"
+}
+
+variable "environment_type" {
+  description = "(Required) Type of environment (e.g. test, production)"
 }
 
 variable "name_suffix" {
   description = "(Optional) Instance name suffix."
-  default     = "-jenkins-master-node"
+  default     = "jenkins-master-node"
 }
 
 variable "vpc_id" {
@@ -51,7 +55,7 @@ variable "iam_policy_names" {
     "KOPS_MANAGEMENT_NODE_cw_cwlogs_sns",
     "KOPS_MANAGEMENT_NODE_dynamodb",
     "KOPS_MANAGEMENT_NODE_ec2",
-    "KOPS_MANAGEMENT_NODE_ecr",
+    "KOPS_MANAGEMENT_NODE_ecr_route53",
     "KOPS_MANAGEMENT_NODE_iam",
     "KOPS_MANAGEMENT_NODE_s3",
     "KOPS_MANAGEMENT_NODE_ssm",
@@ -92,7 +96,7 @@ variable "jenkins_admin_password" {
 
 variable "jenkins_job_repo_url" {
   description = "(Optional) Git repo url with Jenkins Jobs"
-  default     = "ssh://git@github.com:kentrikos/jenkins-bootstrap-pipelines.git"
+  default     = "https://github.com/kentrikos/jenkins-bootstrap-pipelines.git"
 }
 
 variable "jenkins_config_repo_url" {

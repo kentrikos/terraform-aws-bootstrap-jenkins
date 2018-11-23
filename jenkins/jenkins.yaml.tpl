@@ -29,6 +29,10 @@ jenkins:
         value: "${aws_region}"
       - key: "AWS_ACCOUNT_NUMBER"
         value: "${aws_account_number}"
+      - key: "PRODUCT_DOMAIN_NAME"
+        value: "${product_domain_name}"
+      - key: "ENVIRONMENT_TYPE"
+        value: "${environment_type}"
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: false
@@ -69,7 +73,7 @@ jobs:
           }
         }
        }
-      pipelineJob("Install_Kubernetes") {
+      pipelineJob("Kubernetes_Install") {
         description()
         disabled(false)
         keepDependencies(false)
@@ -84,7 +88,26 @@ jobs:
                 branch("*/master")
               }
             }
-            scriptPath("kubernetes/Jenkinsfile")
+            scriptPath("kubernetes/install/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("Kubernetes_Destroy") {
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("*/master")
+              }
+            }
+            scriptPath("kubernetes/destroy/Jenkinsfile")
           }
         }
        }

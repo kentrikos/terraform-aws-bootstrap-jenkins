@@ -28,6 +28,7 @@ data "aws_ssm_parameter" "proxy_no" {
 }
 
 locals {
+  name                        = "${var.product_domain_name}-${var.environment_type}-${var.name_suffix}"
   jenkins_no_proxy_list       = "${join("\\n",split(",",data.aws_ssm_parameter.proxy_no.value))}"
   jenkins_proxy_http          = "${element(split(":",replace(replace(data.aws_ssm_parameter.proxy_http.value,"http://",""),"https://","" )),0)}"
   iam_policy_names_list_local = "${join(",", var.iam_policy_names)}"
@@ -71,6 +72,9 @@ data "template_file" "jenkins-jenkins_yaml" {
     jenkins_proxy_http_port = "${var.jenkins_proxy_http_port}"
     jenkins_no_proxy_list   = "${local.jenkins_no_proxy_list}"
     jenkins_proxy_http      = "${local.jenkins_proxy_http}"
+
+    product_domain_name = "${var.product_domain_name}"
+    environment_type    = "${var.environment_type}"
   }
 }
 
@@ -109,7 +113,7 @@ resource "aws_instance" "jenkins_master_node" {
   key_name                    = "${aws_key_pair.jenkins_master_node_key.key_name}"
   user_data                   = "${length(var.ami_id) == 0 ? data.template_file.user_data.rendered : ""}"
   iam_instance_profile        = "${aws_iam_instance_profile.jenkins_master_node.name}"
-  tags                        = "${merge(map("Name", "${var.name}${var.name_suffix}"), var.tags)}"
+  tags                        = "${merge(map("Name", "${local.name}"), var.tags)}"
 
   root_block_device {
     volume_size = 64
@@ -186,12 +190,12 @@ data "aws_iam_policy" "this" {
 }
 
 resource "aws_iam_instance_profile" "jenkins_master_node" {
-  name = "jenkins_master_node_${var.name}"
+  name = "${local.name}"
   role = "${aws_iam_role.jenkins_master_node.name}"
 }
 
 resource "aws_iam_role" "jenkins_master_node" {
-  name = "jenkins_master_node_${var.name}"
+  name = "${local.name}"
 
   assume_role_policy = <<EOF
 {
@@ -217,7 +221,7 @@ resource "aws_iam_role_policy_attachment" "jenkins_master_node" {
 }
 
 resource "aws_security_group" "ssh" {
-  name        = "${var.name}${var.name_suffix}"
+  name        = "${local.name}"
   description = "Allow SSH access to instance"
   vpc_id      = "${var.vpc_id}"
 
