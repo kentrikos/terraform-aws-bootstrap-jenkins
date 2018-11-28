@@ -127,26 +127,6 @@ jobs:
               }
             }
             scriptPath("operations/kubernetes/destroy/Jenkinsfile")
-            scriptPath("kubernetes/install/Jenkinsfile")
-          }
-        }
-       }
-      pipelineJob("Kubernetes_Destroy") {
-        description()
-        disabled(false)
-        keepDependencies(false)
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote {
-                  url("${jenkins_job_repo_url}")
-                  credentials("bitbucket-key")
-                }
-                branch("*/master")
-              }
-            }
-            scriptPath("kubernetes/destroy/Jenkinsfile")
           }
         }
        }
