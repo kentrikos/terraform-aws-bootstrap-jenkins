@@ -54,7 +54,7 @@ credentials:
               privateKey: $${GITPRIVATEKEY}
 jobs:
   - script: >
-      pipelineJob("Generate_IAM_Policy_Operations") {
+      pipelineJob("Generate_IAM_Policies_Operations") {
         description()
         disabled(false)
         keepDependencies(false)
@@ -73,7 +73,7 @@ jobs:
           }
         }
        }
-      pipelineJob("Generate_IAM_Policy_Application") {
+      pipelineJob("Generate_IAM_Policies_Application") {
         description()
         disabled(false)
         keepDependencies(false)
