@@ -54,7 +54,7 @@ credentials:
               privateKey: $${GITPRIVATEKEY}
 jobs:
   - script: >
-      pipelineJob("Generate_IAM_Policy") {
+      pipelineJob("Generate_IAM_Policy_Operations") {
         description()
         disabled(false)
         keepDependencies(false)
@@ -70,6 +70,25 @@ jobs:
               }
             }
             scriptPath("operations/iam/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("Generate_IAM_Policy_Application") {
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("*/master")
+              }
+            }
+            scriptPath("application/iam/Jenkinsfile")
           }
         }
        }
