@@ -69,7 +69,7 @@ jobs:
                 branch("*/master")
               }
             }
-            scriptPath("iam/Jenkinsfile")
+            scriptPath("operations/iam/Jenkinsfile")
           }
         }
        }
@@ -88,6 +88,26 @@ jobs:
                 branch("*/master")
               }
             }
+            scriptPath("operations/kubernetes/install/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("Kubernetes_Destroy") {
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("*/master")
+              }
+            }
+            scriptPath("operations/kubernetes/destroy/Jenkinsfile")
             scriptPath("kubernetes/install/Jenkinsfile")
           }
         }
@@ -126,7 +146,7 @@ jobs:
                 branch("*/master")
               }
             }
-            scriptPath("jx/Jenkinsfile")
+            scriptPath("operations/jx/Jenkinsfile")
           }
         }
        }

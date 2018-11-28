@@ -55,6 +55,7 @@ curl -LO https://github.com/kubernetes/kops/releases/download/$$(curl -s https:/
 chmod +x kops-linux-amd64
 mv -i kops-linux-amd64 /usr/bin/kops
 
+export HELM_INSTALL_DIR=/usr/bin
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
 chmod 700 get_helm.sh
 ./get_helm.sh
