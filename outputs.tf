@@ -18,6 +18,11 @@ output "jenkins_private_ip" {
   value       = "${aws_instance.jenkins_master_node.private_ip}"
 }
 
+output "jenkins_dns_name" {
+  description = "FQDN associated with Jenkins master"
+  value       = "${aws_route53_record.jenkins_master_node.name}"
+}
+
 output "jenkins_username" {
   description = "Linux username for the instance."
   value       = "ec2-user"
