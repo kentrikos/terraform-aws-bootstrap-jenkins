@@ -134,6 +134,19 @@ resource "aws_instance" "jenkins_master_node" {
   }
 }
 
+# Route53 configuration for the Jenkins master:
+data "aws_route53_zone" "selected" {
+  zone_id = "${var.dns_domain_hosted_zone_ID}"
+}
+
+resource "aws_route53_record" "jenkins_master_node" {
+  zone_id = "${data.aws_route53_zone.selected.zone_id}"
+  name    = "${var.dns_hostname}.${data.aws_route53_zone.selected.name}"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.jenkins_master_node.private_ip}"]
+}
+
 # Do the provisioning at this point
 resource "null_resource" "node" {
   connection {
