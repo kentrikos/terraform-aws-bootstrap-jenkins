@@ -63,7 +63,7 @@ variable "iam_policy_names" {
     "KOPS_MANAGEMENT_NODE_lma",
     "KOPS_MANAGEMENT_NODE_dynamodb",
     "KOPS_MANAGEMENT_NODE_ec2",
-    "KOPS_MANAGEMENT_NODE_ecr",
+    "KOPS_MANAGEMENT_NODE_ecr_route53",
     "KOPS_MANAGEMENT_NODE_iam",
     "KOPS_MANAGEMENT_NODE_s3",
     "KOPS_MANAGEMENT_NODE_ssm",
