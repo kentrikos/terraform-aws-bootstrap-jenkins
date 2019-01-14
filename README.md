@@ -51,8 +51,8 @@ module "jenkins" {
 | vpc_id | (Required) The VPC ID to launch the instance in. | string | - | yes |
 | operations_aws_account_number | AWS operations account number (without hyphens) | string | - | yes |
 | application_aws_account_number | AWS application account number (without hyphens) | string | - | yes |
-| dns_domain_hosted_zone_ID | R53 Hosted Zone ID for domain that will be used by Jenkins master | string | - | yes |
-| dns_hostname | Local part of FQDN for Jenkins master | string | `jenkins` | no |
+| jenkins_dns_domain_hosted_zone_ID | R53 Hosted Zone ID for domain that will be used by Jenkins master | string | - | yes |
+| jenkins_dns_hostname | Local part of FQDN for Jenkins master | string | `jenkins` | no |
 | ami_id | (Optional) The AMI ID, which provides restoration of pre-created managment node. (default is false). | string | `` | no |
 | auto_IAM_mode | Create IAM Policies in AWS | string | `false` | no |
 | auto_IAM_path | IAM path for auto IAM mode uploaded policies | string | `/` | no |
