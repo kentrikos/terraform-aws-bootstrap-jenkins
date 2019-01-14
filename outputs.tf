@@ -1,6 +1,6 @@
 output "jenkins_web_url" {
   description = "URL for Jenkins web dashboard"
-  value       = "http://${aws_instance.jenkins_master_node.private_ip}:8080"
+  value       = "http://${aws_route53_record.jenkins_master_node.name}:8080"
 }
 
 output "jenkins_web_login" {
