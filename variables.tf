@@ -121,11 +121,11 @@ variable "auto_IAM_path" {
   default     = "/"
 }
 
-variable "dns_domain_hosted_zone_ID" {
+variable "jenkins_dns_domain_hosted_zone_ID" {
   description = "R53 Hosted Zone ID for domain that will be used by Jenkins master"
 }
 
-variable "dns_hostname" {
+variable "jenkins_dns_hostname" {
   description = "Local part of FQDN for Jenkins master"
   default     = "jenkins"
 }

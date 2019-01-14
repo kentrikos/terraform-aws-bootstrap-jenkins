@@ -76,7 +76,7 @@ data "template_file" "jenkins-jenkins_yaml" {
   template = "${file("${path.module}/jenkins/jenkins.yaml.tpl")}"
 
   vars {
-    jenkins_url             = "${aws_instance.jenkins_master_node.private_ip}:8080"
+    jenkins_url             = "http://${aws_route53_record.jenkins_master_node.name}:8080"
     jenkins_config_repo_url = "${var.jenkins_config_repo_url}"
 
     jenkins_job_repo_url           = "${var.jenkins_job_repo_url}"
@@ -147,12 +147,12 @@ resource "aws_instance" "jenkins_master_node" {
 
 # Route53 configuration for the Jenkins master:
 data "aws_route53_zone" "selected" {
-  zone_id = "${var.dns_domain_hosted_zone_ID}"
+  zone_id = "${var.jenkins_dns_domain_hosted_zone_ID}"
 }
 
 resource "aws_route53_record" "jenkins_master_node" {
   zone_id = "${data.aws_route53_zone.selected.zone_id}"
-  name    = "${var.dns_hostname}.${data.aws_route53_zone.selected.name}"
+  name    = "${var.jenkins_dns_hostname}.${data.aws_route53_zone.selected.name}"
   type    = "A"
   ttl     = "300"
   records = ["${aws_instance.jenkins_master_node.private_ip}"]
