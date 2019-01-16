@@ -59,15 +59,15 @@ variable "iam_policy_names" {
   description = "(Optional) List of IAM policy names to apply to the instance."
 
   default = [
-    "KOPS_MANAGEMENT_NODE_autoscaling_elb",
-    "KOPS_MANAGEMENT_NODE_lma",
-    "KOPS_MANAGEMENT_NODE_dynamodb",
-    "KOPS_MANAGEMENT_NODE_ec2",
-    "KOPS_MANAGEMENT_NODE_ecr_route53",
-    "KOPS_MANAGEMENT_NODE_iam",
-    "KOPS_MANAGEMENT_NODE_s3",
-    "KOPS_MANAGEMENT_NODE_ssm",
-    "KOPS_MANAGEMENT_NODE_vpc",
+    "KENTRIKOS_autoscaling_elb",
+    "KENTRIKOS_lma",
+    "KENTRIKOS_dynamodb",
+    "KENTRIKOS_ec2",
+    "KENTRIKOS_ecr_route53",
+    "KENTRIKOS_iam",
+    "KENTRIKOS_s3",
+    "KENTRIKOS_ssm",
+    "KENTRIKOS_vpc",
   ]
 }
 
