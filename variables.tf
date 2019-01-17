@@ -129,3 +129,8 @@ variable "jenkins_dns_hostname" {
   description = "Local part of FQDN for Jenkins master"
   default     = "jenkins"
 }
+
+variable "region" {
+  description = "AWS region"
+  default     = "eu-central-1"
+}

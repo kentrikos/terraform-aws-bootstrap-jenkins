@@ -69,6 +69,7 @@ module "jenkins" {
 | name_suffix | (Optional) Instance name suffix. | string | `jenkins-master-node` | no |
 | ssh_allowed_cidrs | (Optional) list of cidr ranges to allow SSH access. | list | `<list>` | no |
 | tags | (Optional) A mapping of tags to assign to the resource. A 'Name' tag will be created by default using the input from the 'name' variable. | map | `<map>` | no |
+| region | AWS region | string | `eu-central-1` | no |
 
 ## Outputs
 

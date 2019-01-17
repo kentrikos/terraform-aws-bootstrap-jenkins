@@ -16,15 +16,15 @@ data "aws_ami" "amazon-linux" {
 }
 
 data "aws_ssm_parameter" "proxy_http" {
-  name = "/proxy/http"
+  name = "/${var.product_domain_name}/${var.environment_type}/proxy/http"
 }
 
 data "aws_ssm_parameter" "proxy_https" {
-  name = "/proxy/https"
+  name = "/${var.product_domain_name}/${var.environment_type}/proxy/https"
 }
 
 data "aws_ssm_parameter" "proxy_no" {
-  name = "/proxy/no"
+  name = "/${var.product_domain_name}/${var.environment_type}/proxy/no"
 }
 
 resource "random_id" "jenkins" {
