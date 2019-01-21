@@ -242,7 +242,7 @@ resource "null_resource" "node" {
       "sudo echo ''  >> /run/secrets/GITPRIVATEKEY",
       "sudo mv /tmp/run_secret_admin_username /run/secrets/ADMIN_USER",
       "sudo mv /tmp/run_secret_admin_password /run/secrets/ADMIN_PASSWORD",
-      "sudo mv /tmp/var_lib_jenkins_docker_copnfig /var/lib/jenkins/.docker/config.json",
+      "sudo mv /tmp/var_lib_jenkins_docker_config /var/lib/jenkins/.docker/config.json",
       "sudo su - root -c  'bash /tmp/setup.sh' ",
     ]
   }
