@@ -170,6 +170,44 @@ jobs:
           }
         }
        }
+      pipelineJob("Grafana_Install") {
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("*/master")
+              }
+            }
+            scriptPath("operations/grafana/install/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("Grafana_Destroy") {
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("*/master")
+              }
+            }
+            scriptPath("operations/grafana/destroy/Jenkinsfile")
+          }
+        }
+       }
 unclassified:
   location:
     adminAddress: you@example.com

@@ -78,11 +78,21 @@ data "template_file" "jenkins-sysconfig" {
   template = "${file("${path.module}/jenkins/jenkins-sysconfig.tpl")}"
 }
 
+data "template_file" "docker-config" {
+  template = "${file("${path.module}/jenkins/docker_config.json.tpl")}"
+
+  vars {
+    httpProxy  = "${data.aws_ssm_parameter.proxy_http.value}"
+    httpsProxy = "${data.aws_ssm_parameter.proxy_https.value}"
+    noProxy    = "${data.aws_ssm_parameter.proxy_no.value}"
+  }
+}
+
 data "template_file" "jenkins-jenkins_yaml" {
   template = "${file("${path.module}/jenkins/jenkins.yaml.tpl")}"
 
   vars {
-    jenkins_url             = "http://${aws_route53_record.jenkins_master_node.name}:8080"
+    jenkins_url             = "${aws_route53_record.jenkins_master_node.name}:8080"
     jenkins_config_repo_url = "${var.jenkins_config_repo_url}"
 
     jenkins_job_repo_url           = "${var.jenkins_job_repo_url}"
@@ -191,6 +201,11 @@ resource "null_resource" "node" {
   }
 
   provisioner "file" {
+    destination = "/tmp/var_lib_jenkins_docker_config"
+    content     = "${data.template_file.docker-config.rendered}"
+  }
+
+  provisioner "file" {
     destination = "/tmp/plugins.txt"
     source      = "${path.module}/jenkins/plugins.txt"
   }
@@ -220,6 +235,7 @@ resource "null_resource" "node" {
       "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'waiting for boot-finished'; sleep 5; done;",
       "sudo su - root -c  'cloud-init status --wait'",
       "sudo mkdir -p /var/lib/jenkins/init.groovy.d/",
+      "sudo mkdir -p /var/lib/jenkins/.docker/",
       "sudo mkdir -p  /run/secrets",
       "sudo mv /tmp/etc_sysconfig_jenkins /etc/sysconfig/jenkins ",
       "sudo mv /tmp/var_lib_jenkins_jenkins.yaml /var/lib/jenkins/jenkins.yaml",
@@ -228,6 +244,7 @@ resource "null_resource" "node" {
       "sudo echo ''  >> /run/secrets/GITPRIVATEKEY",
       "sudo mv /tmp/run_secret_admin_username /run/secrets/ADMIN_USER",
       "sudo mv /tmp/run_secret_admin_password /run/secrets/ADMIN_PASSWORD",
+      "sudo mv /tmp/var_lib_jenkins_docker_config /var/lib/jenkins/.docker/config.json",
       "sudo su - root -c  'bash /tmp/setup.sh' ",
     ]
   }

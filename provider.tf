@@ -1,10 +1,3 @@
-# AWS region must be set externally, e.g. by exporting AWS_DEFAULT_REGION env variable
-
-provider "aws" {
-  region  = "${var.region}"
-  version = " ~> v1.55"
-}
-
 provider "http" {
   version = " ~> v1.0.1"
 }
