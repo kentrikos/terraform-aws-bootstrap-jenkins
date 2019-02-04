@@ -226,7 +226,7 @@ jobs:
             scriptPath("operations/prometheus/install/Jenkinsfile")
           }
         }
-      }
+       }
       pipelineJob("Prometheus_ops_Destroy") {
         description()
         disabled(false)
