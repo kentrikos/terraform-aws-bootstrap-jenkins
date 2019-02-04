@@ -208,6 +208,44 @@ jobs:
           }
         }
        }
+      pipelineJob("Prometheus_ops_Install") {
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("*/master")
+              }
+            }
+            scriptPath("operations/prometheus/install/Jenkinsfile")
+          }
+        }
+      }
+      pipelineJob("Prometheus_ops_Destroy") {
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("*/master")
+              }
+            }
+            scriptPath("operations/prometheus/destroy/Jenkinsfile")
+          }
+        }
+      }
 unclassified:
   location:
     adminAddress: you@example.com
