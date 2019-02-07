@@ -46,16 +46,12 @@ unzip terraform.zip
 mv -i terraform /usr/bin/
 rm -rf terraform.zip
 
-
-
-ARK_VERSION=$$(curl -s https://api.github.com/repos/heptio/ark/releases/latest | grep tag_name | cut -d '"' -f 4)
-ARK_DOWNLOAD_URL="https://github.com/heptio/ark/releases/download/$${ARK_VERSION}/ark-$${ARK_VERSION}-linux-amd64.tar.gz"
+ARK_VERSION=$$(curl -s https://api.github.com/repos/heptio/velero/releases/latest | grep tag_name | cut -d '"' -f 4)
+ARK_DOWNLOAD_URL="https://github.com/heptio/velero/releases/download/$${ARK_VERSION}/ark-$${ARK_VERSION}-linux-amd64.tar.gz"
 wget "$$ARK_DOWNLOAD_URL" -O ark.tar.gz
 tar -xzf ark.tar.gz
 chmod +x ark
-chmod +x ark-restic-restore-helper
 mv -i ark /usr/bin/
-mv -i ark-restic-restore-helper /usr/bin/
 rm -rf ark.tar.gz
 
 curl -LO https://github.com/kubernetes/kops/releases/download/$$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
