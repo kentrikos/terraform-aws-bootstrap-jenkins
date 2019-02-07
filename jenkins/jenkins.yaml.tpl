@@ -68,7 +68,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.1.0")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("operations/iam/create/${iam_jobs_path}/Jenkinsfile")
@@ -87,7 +87,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.1.0")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("application/iam/create/${iam_jobs_path}/Jenkinsfile")
@@ -106,7 +106,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.1.0")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("operations/kubernetes/install/Jenkinsfile")
@@ -125,7 +125,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.1.0")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("operations/kubernetes/destroy/Jenkinsfile")
@@ -144,7 +144,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.1.0")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("operations/images/jenkins-x-image/Jenkinsfile")
@@ -163,7 +163,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.1.0")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("operations/jx/Jenkinsfile")
@@ -182,7 +182,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.1.0")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("operations/grafana/install/Jenkinsfile")
@@ -201,7 +201,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.1.0")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("operations/grafana/destroy/Jenkinsfile")
@@ -220,7 +220,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("*/master")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("operations/prometheus/install/Jenkinsfile")
@@ -239,7 +239,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("*/master")
+                branch("*/multi_deployment")
               }
             }
             scriptPath("operations/prometheus/destroy/Jenkinsfile")
