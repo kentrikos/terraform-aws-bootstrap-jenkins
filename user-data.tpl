@@ -36,19 +36,19 @@ ${docker_proxy_info}
 
 usermod -a -G docker ec2-user
 usermod -a -G docker jenkins
-systemd daemon-reload
+systemctl daemon-reload
 service docker restart
 
 TERRAFORM_VERSION=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d '"' -f 4|cut -c 2-)
 TERRAFORM_DOWNLOAD_URL="https://releases.hashicorp.com/terraform/$${TERRAFORM_VERSION}/terraform_$${TERRAFORM_VERSION}_linux_amd64.zip"
-wget "$$TERRAFORM_DOWNLOAD_URL" -O terraform.zip
+wget --quiet "$$TERRAFORM_DOWNLOAD_URL" -O terraform.zip
 unzip terraform.zip
 mv -i terraform /usr/bin/
 rm -rf terraform.zip
 
 ARK_VERSION=$$(curl -s https://api.github.com/repos/heptio/velero/releases/latest | grep tag_name | cut -d '"' -f 4)
 ARK_DOWNLOAD_URL="https://github.com/heptio/velero/releases/download/$${ARK_VERSION}/ark-$${ARK_VERSION}-linux-amd64.tar.gz"
-wget "$$ARK_DOWNLOAD_URL" -O ark.tar.gz
+wget --quiet "$$ARK_DOWNLOAD_URL" -O ark.tar.gz
 tar -xzf ark.tar.gz
 chmod +x ark
 mv -i ark /usr/bin/
@@ -65,15 +65,15 @@ chmod 700 get_helm.sh
 
 
 JX_VERSION=1.3.737
-curl -f -L https://github.com/jenkins-x/jx/releases/download/v$${JX_VERSION}/jx-linux-amd64.tar.gz | tar xzv &&  mv jx /usr/bin/
+curl -s -f -L https://github.com/jenkins-x/jx/releases/download/v$${JX_VERSION}/jx-linux-amd64.tar.gz | tar xzv &&  mv jx /usr/bin/
 
 
 mkdir -p /usr/share/jenkins/ref/
-curl -LO https://raw.githubusercontent.com/jenkinsci/docker/master/install-plugins.sh
+curl -s -LO https://raw.githubusercontent.com/jenkinsci/docker/master/install-plugins.sh
 chmod +x install-plugins.sh
 mv install-plugins.sh /usr/local/bin/
 
-curl -LO https://raw.githubusercontent.com/jenkinsci/docker/master/jenkins-support
+curl -s -LO https://raw.githubusercontent.com/jenkinsci/docker/master/jenkins-support
 mv jenkins-support /usr/local/bin/
 
 echo lts > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -x
+
 export JENKINS_UC=https://updates.jenkins.io
 ln -s /usr/lib/jenkins/jenkins.war /usr/share/jenkins/jenkins.war
 
@@ -13,3 +15,5 @@ find /usr/share/jenkins/ref/ \( -type f -o -type l \) -exec bash -c '. /usr/loca
 chown jenkins:jenkins $JENKINS_HOME -R
 
 systemctl restart jenkins.service
+
+set +x
