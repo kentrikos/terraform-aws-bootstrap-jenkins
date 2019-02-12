@@ -14,13 +14,18 @@ find /usr/share/jenkins/ref/ \( -type f -o -type l \) -exec bash -c '. /usr/loca
 
 chown jenkins:jenkins $JENKINS_HOME -R
 echo "Attempt to stop and start jenkins"
+systemctl status jenkins.service
+
 systemctl stop jenkins.service
 sleep 5
+systemctl status jenkins.service
 systemctl start jenkins.service
 sleep 15
 systemctl status jenkins.service
 
 systemctl enable jenkins
+sleep 10
+systemctl status jenkins.service
 echo "Attempt to stop and start jenkins done"
 
 set +x
