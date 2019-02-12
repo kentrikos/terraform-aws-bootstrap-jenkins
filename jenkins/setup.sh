@@ -13,7 +13,14 @@ export COPY_REFERENCE_FILE_LOG="$JENKINS_HOME/copy_reference_file.log"
 find /usr/share/jenkins/ref/ \( -type f -o -type l \) -exec bash -c '. /usr/local/bin/jenkins-support; for arg; do copy_reference_file "$arg"; done' _ {} +
 
 chown jenkins:jenkins $JENKINS_HOME -R
+echo "Attempt to stop and start jenkins"
+systemctl stop jenkins.service
+sleep 5
+systemctl start jenkins.service
+sleep 15
+systemctl status jenkins.service
 
-systemctl restart jenkins.service
+systemctl enable jenkins
+echo "Attempt to stop and start jenkins done"
 
 set +x

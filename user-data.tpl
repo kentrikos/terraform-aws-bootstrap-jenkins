@@ -82,5 +82,4 @@ echo lts > /var/lib/jenkins/jenkins.install.UpgradeWizard.state
 echo lts > /var/lib/jenkins/jenkins.install.InstallUtil.lastExecVersion
 
 
-systemctl enable jenkins
 

@@ -245,7 +245,7 @@ resource "null_resource" "node" {
       "sudo mv /tmp/run_secret_admin_username /run/secrets/ADMIN_USER",
       "sudo mv /tmp/run_secret_admin_password /run/secrets/ADMIN_PASSWORD",
       "sudo mv /tmp/var_lib_jenkins_docker_config /var/lib/jenkins/.docker/config.json",
-      "sudo su - root -c  'bash /tmp/setup.sh |tee /var/log/setup_log' ",
+      "sudo su - root -c  'bash /tmp/setup.sh 2>&1 |tee /var/log/setup_log' ",
     ]
   }
 }
