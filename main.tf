@@ -252,7 +252,7 @@ resource "null_resource" "node" {
 
 data "aws_iam_policy" "this" {
   count = "${length(split(",",local.iam_policy_names_list))}"
-  arn   = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy${local.iam_policy_names_prefix}${element(split(",", local.iam_policy_names_list), count.index)}${local.iam_policy_names_sufix}"
+  arn   = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy${local.iam_policy_names_prefix}${element(split(",", local.iam_policy_names_list), count.index)}"
 }
 
 resource "aws_iam_instance_profile" "jenkins_master_node" {
@@ -290,7 +290,7 @@ data "aws_iam_policy_document" "AssumeJenkinsCrossAccount" {
     ]
 
     resources = [
-      "arn:aws:iam::${var.application_aws_account_number}:role/KENTRIKOS_${data.aws_region.current.name}_${var.product_domain_name}_${var.environment_type}_CrossAccount",
+      "arn:aws:iam::${var.application_aws_account_number}:role/KopsCrossAccount",
     ]
   }
 }
@@ -306,7 +306,7 @@ resource "aws_iam_policy" "AssumeJenkinsCrossAccount" {
 resource "aws_iam_role_policy_attachment" "jenkins_master_node" {
   role       = "${aws_iam_role.jenkins_master_node.name}"
   count      = "${length(split(",",local.iam_policy_names_list))}"
-  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy${local.iam_policy_names_prefix}${element(split(",",local.iam_policy_names_list), count.index)}${local.iam_policy_names_sufix}"
+  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy${local.iam_policy_names_prefix}${element(split(",",local.iam_policy_names_list), count.index)}"
 }
 
 # This policy is attached only if auto policy creation is allowed (auto_IAM_mode)
