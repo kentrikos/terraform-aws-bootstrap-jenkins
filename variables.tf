@@ -59,7 +59,7 @@ variable "iam_policy_names" {
   description = "(Optional) List of IAM policy names to apply to the instance."
 
   default = [
-    "KOPS_MANAGEMENT_NODE_autoscaling_elb",
+    "KOPS_MANAGEMENT_NODE_autoscaling_elb_eks",
     "KOPS_MANAGEMENT_NODE_lma",
     "KOPS_MANAGEMENT_NODE_dynamodb",
     "KOPS_MANAGEMENT_NODE_ec2",
