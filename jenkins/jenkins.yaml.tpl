@@ -1,8 +1,3 @@
-plugins:
-  proxy:
-    name: "${jenkins_proxy_http}"
-    noProxyHost: "${jenkins_no_proxy_list}"
-    port: ${jenkins_proxy_http_port}
 jenkins:
   systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code Plugin\n\n"
   numExecutors: 5
@@ -40,6 +35,10 @@ jenkins:
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: false
+  proxy:
+    name: "${jenkins_proxy_http}"
+    noProxyHost: "${jenkins_no_proxy_list}"
+    port: ${jenkins_proxy_http_port}
 security:
   remotingCLI:
     enabled: false
@@ -80,7 +79,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/iam/create/${iam_jobs_path}/Jenkinsfile")
@@ -100,7 +99,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("application/iam/create/${iam_jobs_path}/Jenkinsfile")
@@ -120,7 +119,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/kubernetes/install_eks/Jenkinsfile")
@@ -140,7 +139,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/kubernetes/destroy_eks/Jenkinsfile")
@@ -160,7 +159,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("application/kubernetes/install_eks/Jenkinsfile")
@@ -180,7 +179,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("application/kubernetes/destroy_eks/Jenkinsfile")
@@ -200,7 +199,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/kubernetes/install_kops/Jenkinsfile")
@@ -220,7 +219,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/kubernetes/destroy_kops/Jenkinsfile")
@@ -240,7 +239,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("application/kubernetes/install_kops/Jenkinsfile")
@@ -260,7 +259,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("application/kubernetes/destroy_kops/Jenkinsfile")
@@ -280,7 +279,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/images/jenkins-x-image/Jenkinsfile")
@@ -343,7 +342,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/grafana/install/Jenkinsfile")
@@ -366,7 +365,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/grafana/destroy/Jenkinsfile")
@@ -389,7 +388,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/ingress/install/Jenkinsfile")
@@ -412,7 +411,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/ingress/destroy/Jenkinsfile")
@@ -435,7 +434,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("application/prometheus/install/Jenkinsfile")
@@ -458,7 +457,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("application/prometheus/destroy/Jenkinsfile")
@@ -481,7 +480,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/prometheus/install/Jenkinsfile")
@@ -504,7 +503,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.4.1")
+                branch("create_pipeline_lib")
               }
             }
             scriptPath("operations/prometheus/destroy/Jenkinsfile")
@@ -515,3 +514,13 @@ unclassified:
   location:
     adminAddress: you@example.com
     url: http://${jenkins_url}/
+  globalLibraries:
+    libraries:
+    - defaultVersion: "create_pipeline_lib"
+      implicit: true
+      name: "kentrikos-shared-library"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              remote: "${jenkins_job_repo_url}"

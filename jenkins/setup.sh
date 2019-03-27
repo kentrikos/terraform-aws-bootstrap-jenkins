@@ -16,6 +16,11 @@ chown jenkins:jenkins $JENKINS_HOME -R
 echo "Attempt to stop and start jenkins"
 systemctl status jenkins.service
 
+chown -R jenkins:jenkins /var/lib/jenkins
+chown -R jenkins:jenkins /var/cache/jenkins
+chown -R jenkins:jenkins /var/log/jenkins
+
+
 systemctl stop jenkins.service
 sleep 5
 systemctl status jenkins.service
@@ -26,6 +31,12 @@ systemctl status jenkins.service
 systemctl enable jenkins
 sleep 10
 systemctl status jenkins.service
+
+systemctl show -p SubState jenkins |grep running || systemctl restart jenkins
+
+sleep 10
+systemctl status jenkins.service
+
 echo "Attempt to stop and start jenkins done"
 
 set +x
