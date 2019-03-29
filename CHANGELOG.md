@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Support for pipeline library definition with same source as jenkins job repo 
 
+### Removed
+- Ark/velero has been removed from installation
+
 ## [0.4.2] - 2019-03-26
 ### Fixed
 - Fix display name for kops create job for application account

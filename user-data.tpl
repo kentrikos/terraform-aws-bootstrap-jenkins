@@ -47,14 +47,6 @@ unzip terraform.zip
 mv -i terraform /usr/bin/
 rm -rf terraform.zip
 
-ARK_VERSION=$$(curl -s https://api.github.com/repos/heptio/velero/releases/latest | grep tag_name | cut -d '"' -f 4)
-ARK_DOWNLOAD_URL="https://github.com/heptio/velero/releases/download/$${ARK_VERSION}/ark-$${ARK_VERSION}-linux-amd64.tar.gz"
-wget --quiet "$$ARK_DOWNLOAD_URL" -O ark.tar.gz
-tar -xzf ark.tar.gz
-chmod +x ark
-mv -i ark /usr/bin/
-rm -rf ark.tar.gz
-
 AWS_IAM_AUTH_VERSION=$$(curl -s https://api.github.com/repos/kubernetes-sigs/aws-iam-authenticator/releases/latest | grep tag_name  | cut -d '"' -f 4)
 AWS_IAM_AUTH_VERSION_NUM=$$(echo $$AWS_IAM_AUTH_VERSION | cut -c 2-)
 AWS_IAM_AUTH_DOWNLOAD_URL="https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/$${AWS_IAM_AUTH_VERSION}/heptio-authenticator-aws_$${AWS_IAM_AUTH_VERSION_NUM}_linux_amd64"
