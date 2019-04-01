@@ -79,7 +79,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/iam/create/${iam_jobs_path}/Jenkinsfile")
@@ -99,7 +99,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("application/iam/create/${iam_jobs_path}/Jenkinsfile")
@@ -119,7 +119,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/kubernetes/install_eks/Jenkinsfile")
@@ -139,7 +139,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/kubernetes/destroy_eks/Jenkinsfile")
@@ -159,7 +159,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("application/kubernetes/install_eks/Jenkinsfile")
@@ -179,7 +179,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("application/kubernetes/destroy_eks/Jenkinsfile")
@@ -199,7 +199,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/kubernetes/install_kops/Jenkinsfile")
@@ -219,7 +219,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/kubernetes/destroy_kops/Jenkinsfile")
@@ -239,7 +239,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("application/kubernetes/install_kops/Jenkinsfile")
@@ -259,7 +259,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("application/kubernetes/destroy_kops/Jenkinsfile")
@@ -279,7 +279,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/images/jenkins-x-image/Jenkinsfile")
@@ -333,6 +333,8 @@ jobs:
         keepDependencies(false)
         parameters {
            choiceParam('K8S_FLAVOR',["eks", "kops"],'Choose type of Kubernetes cluster (required for kops)')
+           string(name: 'GRAFANA_PV', defaultValue: "",                            
+                  description: 'Name of existing PV to use for Grafana storage (usually "pvc-*"), leave empty if this is first deployment')
         }
         definition {
           cpsScm {
@@ -342,7 +344,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/grafana/install/Jenkinsfile")
@@ -365,7 +367,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/grafana/destroy/Jenkinsfile")
@@ -388,7 +390,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/ingress/install/Jenkinsfile")
@@ -411,7 +413,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/ingress/destroy/Jenkinsfile")
@@ -434,7 +436,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("application/prometheus/install/Jenkinsfile")
@@ -457,7 +459,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("application/prometheus/destroy/Jenkinsfile")
@@ -480,7 +482,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/prometheus/install/Jenkinsfile")
@@ -503,7 +505,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("create_pipeline_lib")
+                branch("0.5.0")
               }
             }
             scriptPath("operations/prometheus/destroy/Jenkinsfile")
@@ -516,7 +518,7 @@ unclassified:
     url: http://${jenkins_url}/
   globalLibraries:
     libraries:
-    - defaultVersion: "create_pipeline_lib"
+    - defaultVersion: "0.5.0"
       implicit: true
       name: "kentrikos-shared-library"
       retriever:

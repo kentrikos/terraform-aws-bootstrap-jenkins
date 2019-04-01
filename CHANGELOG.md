@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.5.0] - 2019-04-01
 ### Fixed
 - Fix for not starting jenkins at server creation
 
@@ -14,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Support for pipeline library definition with same source as jenkins job repo 
+- Add parameter for Grafana persistence in Grafana install job
 
 ### Removed
 - Ark/velero has been removed from installation
