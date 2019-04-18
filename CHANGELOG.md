@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2019-04-18
+### Added
+- Added logging infrastucture deployment to operations account
+- Added logging infrastucture deployment to application account
+
 ## [0.6.0] - 2019-04-15
 ### Added
 - Add example app deployment to operations account
