@@ -558,8 +558,8 @@ jobs:
         }
        }
       pipelineJob("LMA/Remove_Logging_Operations") {
-        displayName('Remove Logging in Operations Account (could impact logging in Application acct)')
-        description()
+        displayName('Remove Logging in Operations Account')
+        description('Could impact logging in Application account')
         disabled(false)
         keepDependencies(false)
         parameters {
@@ -581,8 +581,8 @@ jobs:
         }
        }
       pipelineJob("LMA/Create_Logging_Application") {
-        displayName('Create Logging in Application Account (requires logging in operations first')
-        description()
+        displayName('Create Logging in Application Account')
+        description('Requires logging deployment in Operations account first')
         disabled(false)
         keepDependencies(false)
         parameters {
