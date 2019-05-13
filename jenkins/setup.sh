@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -x
+chmod a+x /etc/init.d/jenkins
 
 export JENKINS_UC=https://updates.jenkins.io
 ln -s /usr/lib/jenkins/jenkins.war /usr/share/jenkins/jenkins.war

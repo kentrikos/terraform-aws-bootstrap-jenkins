@@ -77,6 +77,10 @@ data "template_file" "jenkins-sysconfig" {
   template = "${file("${path.module}/jenkins/jenkins-sysconfig.tpl")}"
 }
 
+data "template_file" "jenkins-initd" {
+  template = "${file("${path.module}/jenkins/jenkins-initd.tpl")}"
+}
+
 data "template_file" "docker-config" {
   template = "${file("${path.module}/jenkins/docker_config.json.tpl")}"
 
@@ -191,6 +195,11 @@ resource "null_resource" "node" {
   }
 
   provisioner "file" {
+    destination = "/tmp/etc_initd_jenkins"
+    content     = "${data.template_file.jenkins-initd.rendered}"
+  }
+
+  provisioner "file" {
     destination = "/tmp/setup.sh"
     source      = "${path.module}/jenkins/setup.sh"
   }
@@ -236,14 +245,15 @@ resource "null_resource" "node" {
       "sudo su - root -c  'cloud-init status --wait'",
       "sudo mkdir -p /var/lib/jenkins/init.groovy.d/",
       "sudo mkdir -p /var/lib/jenkins/.docker/",
-      "sudo mkdir -p  /run/secrets",
+      "sudo mkdir -p  /etc/secrets/jenkins",
       "sudo mv /tmp/etc_sysconfig_jenkins /etc/sysconfig/jenkins ",
+      "sudo mv /tmp/etc_initd_jenkins /etc/init.d/jenkins ",
       "sudo mv /tmp/var_lib_jenkins_jenkins.yaml /var/lib/jenkins/jenkins.yaml",
       "sudo mv /tmp/var_lib_jenkins_scriptApproval.xml /var/lib/jenkins/scriptApproval.xml",
-      "sudo mv /tmp/run_secret_git_private_key /run/secrets/GITPRIVATEKEY",
+      "sudo mv /tmp/run_secret_git_private_key /etc/secrets/jenkins/GITPRIVATEKEY",
       "sudo echo ''  >> /run/secrets/GITPRIVATEKEY",
-      "sudo mv /tmp/run_secret_admin_username /run/secrets/ADMIN_USER",
-      "sudo mv /tmp/run_secret_admin_password /run/secrets/ADMIN_PASSWORD",
+      "sudo mv /tmp/run_secret_admin_username /etc/secrets/jenkins/ADMIN_USER",
+      "sudo mv /tmp/run_secret_admin_password /etc/secrets/jenkins/ADMIN_PASSWORD",
       "sudo mv /tmp/var_lib_jenkins_docker_config /var/lib/jenkins/.docker/config.json",
       "sudo su - root -c  'bash /tmp/setup.sh 2>&1 |tee /var/log/setup_log' ",
     ]
