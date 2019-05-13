@@ -77,10 +77,6 @@ data "template_file" "jenkins-sysconfig" {
   template = "${file("${path.module}/jenkins/jenkins-sysconfig.tpl")}"
 }
 
-data "local_file" "jenkins-initd" {
-  filename = "${file("${path.module}/jenkins/jenkins-initd")}"
-}
-
 data "template_file" "docker-config" {
   template = "${file("${path.module}/jenkins/docker_config.json.tpl")}"
 
@@ -196,7 +192,7 @@ resource "null_resource" "node" {
 
   provisioner "file" {
     destination = "/tmp/etc_initd_jenkins"
-    content     = "${data.local_file.jenkins-initd.content}"
+    source      = "${path.module}/jenkins/jenkins-initd"
   }
 
   provisioner "file" {
