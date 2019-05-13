@@ -38,8 +38,8 @@ cloudbees-folder:6.8
 command-launcher:1.3
 conditional-buildstep:1.3.6
 config-file-provider:3.6
-configuration-as-code:1.14
-configuration-as-code-support:1.14
+configuration-as-code:1.15
+configuration-as-code-support:1.15
 credentials:2.1.18
 credentials-binding:1.18
 delivery-pipeline-plugin:1.3.2
