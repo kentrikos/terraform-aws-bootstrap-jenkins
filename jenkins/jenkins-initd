@@ -100,7 +100,7 @@ PARAMS="--logfile=/var/log/jenkins/jenkins.log --webroot=/var/cache/jenkins/war 
 [ -n "$JENKINS_ARGS" ] && PARAMS="$PARAMS $JENKINS_ARGS"
 
 if [ "$JENKINS_ENABLE_ACCESS_LOG" = "yes" ]; then
-    PARAMS="$PARAMS --accessLoggerClassName=winstone.accesslog.SimpleAccessLogger --simpleAccessLogger.format=combined --simpleAccessLogger.file=/var/log/jenkins/access_log
+    PARAMS="$PARAMS --accessLoggerClassName=winstone.accesslog.SimpleAccessLogger --simpleAccessLogger.format=combined --simpleAccessLogger.file=/var/log/jenkins/access_log"
 fi
 
 RETVAL=0

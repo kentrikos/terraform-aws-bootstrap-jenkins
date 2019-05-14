@@ -40,4 +40,6 @@ systemctl status jenkins.service
 
 echo "Attempt to stop and start jenkins done"
 
+(crontab -l 2>/dev/null; echo "*/1 * * * * systemctl show -p SubState jenkins |grep -E 'running|dead' || systemctl restart jenkins") | crontab -
+
 set +x

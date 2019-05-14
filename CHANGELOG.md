@@ -6,7 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
-- Fix handling secrets after reboot
+- Fix handling secrets after reboot 
+
+### Changed
+- Secrets for jenkins moved to /etc/secrets/jenkins/ 
 
 ## [0.7.0] - 2019-05-10
 ### Added
