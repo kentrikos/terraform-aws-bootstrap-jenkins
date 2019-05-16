@@ -175,6 +175,25 @@ resource "aws_route53_record" "jenkins_master_node" {
 }
 
 # Do the provisioning at this point
+# Do the provisioning at this point
+resource "null_resource" "jenkins_configs" {
+  count = "${var.jenkins_additional_jcasc != "" ? 1 : 0}"
+
+  connection {
+    type        = "ssh"
+    agent       = false
+    user        = "ec2-user"
+    host        = "${aws_instance.jenkins_master_node.private_ip}"
+    private_key = "${tls_private_key.jenkins_master_node_key.private_key_pem}"
+    timeout     = "3m"
+  }
+
+  provisioner "file" {
+    destination = "/tmp/jenkins_configs"
+    source      = "${var.jenkins_additional_jcasc}"
+  }
+}
+
 resource "null_resource" "node" {
   connection {
     type        = "ssh"
@@ -240,17 +259,19 @@ resource "null_resource" "node" {
       "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'waiting for boot-finished'; sleep 5; done;",
       "sudo su - root -c  'cloud-init status --wait'",
       "sudo mkdir -p /var/lib/jenkins/init.groovy.d/",
+      "sudo mkdir -p /var/lib/jenkins/jcasc/",
       "sudo mkdir -p /var/lib/jenkins/.docker/",
       "sudo mkdir -p  /etc/secrets/jenkins",
       "sudo mv /tmp/etc_sysconfig_jenkins /etc/sysconfig/jenkins ",
       "sudo mv /tmp/etc_initd_jenkins /etc/init.d/jenkins ",
-      "sudo mv /tmp/var_lib_jenkins_jenkins.yaml /var/lib/jenkins/jenkins.yaml",
+      "sudo mv /tmp/var_lib_jenkins_jenkins.yaml /var/lib/jenkins/jcasc/jenkins.yaml",
       "sudo mv /tmp/var_lib_jenkins_scriptApproval.xml /var/lib/jenkins/scriptApproval.xml",
       "sudo mv /tmp/run_secret_git_private_key /etc/secrets/jenkins/GITPRIVATEKEY",
       "sudo echo ''  >> /run/secrets/GITPRIVATEKEY",
       "sudo mv /tmp/run_secret_admin_username /etc/secrets/jenkins/ADMIN_USER",
       "sudo mv /tmp/run_secret_admin_password /etc/secrets/jenkins/ADMIN_PASSWORD",
       "sudo mv /tmp/var_lib_jenkins_docker_config /var/lib/jenkins/.docker/config.json",
+      "sudo mv /tmp/jenkins_configs/* /var/lib/jenkins/jcasc/",
       "sudo su - root -c  'bash /tmp/setup.sh 2>&1 |tee /var/log/setup_log' ",
     ]
   }
