@@ -159,6 +159,10 @@ resource "aws_instance" "jenkins_master_node" {
     volume_size = 64
     volume_type = "gp2"
   }
+
+  lifecycle {
+    ignore_changes = ["ami"]
+  }
 }
 
 # Route53 configuration for the Jenkins master:
