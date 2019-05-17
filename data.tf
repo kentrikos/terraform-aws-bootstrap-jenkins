@@ -100,7 +100,7 @@ data "aws_iam_policy_document" "AssumeJenkinsCrossAccount" {
 }
 
 data "external" "trigger" {
-  program = ["${path.module}/dirhash.sh"]
+  program = ["${path.module}/scripts/dirhash.sh"]
 
   query {
     directory = "${path.module}/jenkins"
@@ -108,7 +108,7 @@ data "external" "trigger" {
 }
 
 data "external" "trigger-jcasc" {
-  program = ["${path.module}/dirhash.sh"]
+  program = ["${path.module}/scripts/dirhash.sh"]
 
   query {
     directory = "${var.jenkins_additional_jcasc}"
