@@ -56,7 +56,7 @@ data "template_file" "jenkins-jenkins_yaml" {
 
     jenkins_job_repo_url           = "${var.jenkins_job_repo_url}"
     aws_region                     = "${data.aws_region.current.name}"
-    aws_operations_account_number  = "${data.aws_caller_identity.current.account_id}"
+    aws_operations_account_number  = "${var.operations_aws_account_number}"
     aws_application_account_number = "${var.application_aws_account_number}"
     jenkins_proxy_http_port        = "${var.jenkins_proxy_http_port}"
     jenkins_no_proxy_list          = "${local.jenkins_no_proxy_list}"
@@ -113,6 +113,4 @@ data "external" "trigger-jcasc" {
   query {
     directory = "${var.jenkins_additional_jcasc}"
   }
-
-  count = "${var.jenkins_additional_jcasc != "" ? 1 : 0}"
 }

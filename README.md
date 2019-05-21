@@ -44,41 +44,44 @@ module "jenkins" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| environment_type | (Required) Type of environment (e.g. test, production) | string | - | yes |
-| jenkins_config_repo_url | Git repo url with Product Domain configuration | string | - | yes |
-| product_domain_name | (Required) Name of product domain, will be used to create other names | string | - | yes |
-| subnet_id | (Required) The VPC Subnet ID to launch the instance in. | string | - | yes |
-| vpc_id | (Required) The VPC ID to launch the instance in. | string | - | yes |
-| operations_aws_account_number | AWS operations account number (without hyphens) | string | - | yes |
-| application_aws_account_number | AWS application account number (without hyphens) | string | - | yes |
-| jenkins_dns_domain_hosted_zone_ID | R53 Hosted Zone ID for domain that will be used by Jenkins master | string | - | yes |
-| jenkins_dns_hostname | Local part of FQDN for Jenkins master | string | `jenkins` | no |
-| ami_id | (Optional) The AMI ID, which provides restoration of pre-created managment node. (default is false). | string | `` | no |
-| auto_IAM_mode | Create IAM Policies in AWS | string | `false` | no |
-| auto_IAM_path | IAM path for auto IAM mode uploaded policies | string | `/` | no |
-| ec2_instance_type | Size of EC2 instance. | string | `t3.medium` | no |
-| http_allowed_cidrs | (Optional) list of cidr ranges to allow HTTP access. | list | `<list>` | no |
-| http_proxy | (Optional) HTTP proxy to use for access to internet. This is required to install packages on instances deployed in ops AWS accounts. | string | `` | no |
-| iam_policy_names | (Optional) List of IAM policy names to apply to the instance. | list | `<list>` | no |
-| iam_policy_names_prefix | (Optional) Prefix for policy names created by portal. | string | `customer/` | no |
-| jenkins_admin_password | Local jenkins Admin username. | string | `Password` | no |
-| jenkins_admin_username | Local jenkins Admin username. | string | `Admin` | no |
-| jenkins_job_repo_url | (Optional) Git repo url with Jenkins Jobs | string | `ssh://git@github.com:kentrikos/jenkins-bootstrap-pipelines.git` | no |
-| jenkins_proxy_http_port | (Optional) HTTP proxy port to use for access to internet. This is required to install packages on instances deployed in ops AWS accounts. | string | `` | no |
-| key_name_prefix | (Optional) The key name of the Key Pair to use for remote management. | string | `jenkins_master` | no |
-| name_suffix | (Optional) Instance name suffix. | string | `jenkins-master-node` | no |
-| ssh_allowed_cidrs | (Optional) list of cidr ranges to allow SSH access. | list | `<list>` | no |
+| ami\_id | (Optional) The AMI ID, which provides restoration of pre-created managment node. (default is false). | string | `""` | no |
+| application\_aws\_account\_number | AWS application account number (without hyphens) | string | n/a | yes |
+| auto\_IAM\_mode | Create IAM Policies in AWS | string | `"false"` | no |
+| auto\_IAM\_path | IAM path for auto IAM mode uploaded policies | string | `"/"` | no |
+| ec2\_instance\_type | Size of EC2 instance. | string | `"t3.medium"` | no |
+| environment\_type | (Required) Type of environment (e.g. test, production) | string | n/a | yes |
+| http\_allowed\_cidrs | (Optional) list of cidr ranges to allow HTTP access. | list | `<list>` | no |
+| http\_proxy | (Optional) HTTP proxy to use for access to internet. This is required to install packages on instances deployed in ops AWS accounts. | string | `""` | no |
+| iam\_policy\_names | (Optional) List of IAM policy names to apply to the instance. | list | `<list>` | no |
+| iam\_policy\_names\_prefix | (Optional) Prefix for policy names created by portal. | string | `"/"` | no |
+| jenkins\_additional\_jcasc | Aditional Jenkins configuration as code files dir path (Path to directory containing aditional Jenkins configuration as code files); empty string is for disable | string | `""` | no |
+| jenkins\_admin\_password | Local jenkins Admin username. | string | `"Password"` | no |
+| jenkins\_admin\_username | Local jenkins Admin username. | string | `"Admin"` | no |
+| jenkins\_config\_repo\_url | Git repo url with Product Domain configuration | string | n/a | yes |
+| jenkins\_dns\_domain\_hosted\_zone\_ID | R53 Hosted Zone ID for domain that will be used by Jenkins master | string | n/a | yes |
+| jenkins\_dns\_hostname | Local part of FQDN for Jenkins master | string | `"jenkins"` | no |
+| jenkins\_job\_repo\_url | (Optional) Git repo url with Jenkins Jobs | string | `"https://github.com/kentrikos/jenkins-bootstrap-pipelines.git"` | no |
+| jenkins\_proxy\_http\_port | (Optional) HTTP proxy port to use for access to internet. This is required to install packages on instances deployed in ops AWS accounts. | string | `"8080"` | no |
+| key\_name\_prefix | (Optional) The key name of the Key Pair to use for remote management. | string | `"jenkins_master"` | no |
+| name\_suffix | (Optional) Instance name suffix. | string | `"jenkins-master-node"` | no |
+| operations\_aws\_account\_number | AWS operations account number (without hyphens) | string | n/a | yes |
+| product\_domain\_name | (Required) Name of product domain, will be used to create other names | string | n/a | yes |
+| region | AWS region | string | `"eu-central-1"` | no |
+| ssh\_allowed\_cidrs | (Optional) list of cidr ranges to allow SSH access. | list | `<list>` | no |
+| subnet\_id | (Required) The VPC Subnet ID to launch the instance in. | string | n/a | yes |
 | tags | (Optional) A mapping of tags to assign to the resource. A 'Name' tag will be created by default using the input from the 'name' variable. | map | `<map>` | no |
-| region | AWS region | string | `eu-central-1` | no |
+| vpc\_id | (Required) The VPC ID to launch the instance in. | string | n/a | yes |
+
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| jenkins_web_url | URL for Jenkins web dashboard |
-| jenkins_web_login | Default username for web dashboard |
-| jenkins_web_password | Default password for web dashboard |
-| jenkins_private_ip | Private IP address assigned to the instance |
-| jenkins_username | Linux username for the instance. |
-| ssh_private_key | SSH private key. |
-| ssh_connection | SSH connection string for remote management. |
+| jenkins\_dns\_name | FQDN associated with Jenkins master |
+| jenkins\_private\_ip | Private IP address assigned to the instance |
+| jenkins\_username | Linux username for the instance. |
+| jenkins\_web\_login | Default username for web dashboard |
+| jenkins\_web\_password | Default password for web dashboard |
+| jenkins\_web\_url | URL for Jenkins web dashboard |
+| ssh\_connection | SSH connection string for remote management. |
+| ssh\_private\_key | SSH private key. |
