@@ -1,5 +1,4 @@
 data "aws_region" "current" {}
-data "aws_caller_identity" "current" {}
 
 data "aws_ami" "amazon-linux" {
   most_recent = true
@@ -81,7 +80,7 @@ data "aws_route53_zone" "selected" {
 
 data "aws_iam_policy" "this" {
   count = "${length(split(",",local.iam_policy_names_list))}"
-  arn   = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy${local.iam_policy_names_prefix}${element(split(",", local.iam_policy_names_list), count.index)}${local.iam_policy_names_sufix}"
+  arn   = "arn:aws:iam::${var.operations_aws_account_number}:policy${local.iam_policy_names_prefix}${element(split(",", local.iam_policy_names_list), count.index)}${local.iam_policy_names_sufix}"
 }
 
 data "aws_iam_policy_document" "AssumeJenkinsCrossAccount" {

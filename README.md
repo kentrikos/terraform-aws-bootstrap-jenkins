@@ -54,7 +54,7 @@ module "jenkins" {
 | http\_proxy | (Optional) HTTP proxy to use for access to internet. This is required to install packages on instances deployed in ops AWS accounts. | string | `""` | no |
 | iam\_policy\_names | (Optional) List of IAM policy names to apply to the instance. | list | `<list>` | no |
 | iam\_policy\_names\_prefix | (Optional) Prefix for policy names created by portal. | string | `"/"` | no |
-| jenkins\_additional\_jcasc | Aditional Jenkins configuration as code files dir path (Path to directory containing aditional Jenkins configuration as code files); empty string is for disable | string | `""` | no |
+| jenkins\_additional\_jcasc | Path to directory containing aditional Jenkins configuration as code files; empty string is for disable | string | `""` | no |
 | jenkins\_admin\_password | Local jenkins Admin username. | string | `"Password"` | no |
 | jenkins\_admin\_username | Local jenkins Admin username. | string | `"Admin"` | no |
 | jenkins\_config\_repo\_url | Git repo url with Product Domain configuration | string | n/a | yes |

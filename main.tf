@@ -209,7 +209,7 @@ resource "aws_iam_policy" "AssumeJenkinsCrossAccount" {
 resource "aws_iam_role_policy_attachment" "jenkins_master_node" {
   role       = "${aws_iam_role.jenkins_master_node.name}"
   count      = "${length(split(",",local.iam_policy_names_list))}"
-  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy${local.iam_policy_names_prefix}${element(split(",",local.iam_policy_names_list), count.index)}${local.iam_policy_names_sufix}"
+  policy_arn = "arn:aws:iam::${var.operations_aws_account_number}:policy${local.iam_policy_names_prefix}${element(split(",",local.iam_policy_names_list), count.index)}${local.iam_policy_names_sufix}"
 }
 
 # This policy is attached only if auto policy creation is allowed (auto_IAM_mode)

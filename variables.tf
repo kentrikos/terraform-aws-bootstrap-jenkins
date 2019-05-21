@@ -136,6 +136,6 @@ variable "region" {
 }
 
 variable "jenkins_additional_jcasc" {
-  description = "Aditional Jenkins configuration as code files dir path (Path to directory containing aditional Jenkins configuration as code files); empty string is for disable"
+  description = "Path to directory containing aditional Jenkins configuration as code files; empty string is for disable"
   default     = ""
 }
