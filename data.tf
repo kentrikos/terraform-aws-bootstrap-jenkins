@@ -1,5 +1,3 @@
-data "aws_region" "current" {}
-
 data "aws_ami" "amazon-linux" {
   most_recent = true
 
@@ -54,7 +52,7 @@ data "template_file" "jenkins-jenkins_yaml" {
     jenkins_config_repo_url = "${var.jenkins_config_repo_url}"
 
     jenkins_job_repo_url           = "${var.jenkins_job_repo_url}"
-    aws_region                     = "${data.aws_region.current.name}"
+    aws_region                     = "${var.region}"
     aws_operations_account_number  = "${var.operations_aws_account_number}"
     aws_application_account_number = "${var.application_aws_account_number}"
     jenkins_proxy_http_port        = "${var.jenkins_proxy_http_port}"
