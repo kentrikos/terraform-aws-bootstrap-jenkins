@@ -49,7 +49,7 @@ resource "aws_instance" "jenkins_master_node" {
   }
 
   lifecycle {
-    ignore_changes = ["ami"]
+    ignore_changes = ["ami", "user_data"]
   }
 }
 
