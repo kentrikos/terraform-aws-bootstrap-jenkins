@@ -19,7 +19,7 @@ provider "template" {
 }
 
 provider "tls" {
-  version = " ~> v1.2"
+  version = " ~> v2.0"
 }
 
 provider "external" {

@@ -31,5 +31,5 @@ locals {
     "
   EOF
 
-  cross_account_role_name = "KENTRIKOS_${var.regio}_${var.product_domain_name}_${var.environment_type}_CrossAccount"
+  cross_account_role_name = "KENTRIKOS_${var.region}_${var.product_domain_name}_${var.environment_type}_CrossAccount"
 }

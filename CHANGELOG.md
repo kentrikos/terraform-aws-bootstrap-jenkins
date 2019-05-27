@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.1] - 2019-05-27
+### Fixed
+- Fix incorrect variable region for cross account role 
+
 ## [0.8.0] - 2019-05-22
 ### Added
 - New jobs for VPC Endpoint Service in app account
