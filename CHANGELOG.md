@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2019-06-14
+### Fixed 
+- Removed remotingCli config - removed from jenkins 2.176+
+
 ## [0.8.1] - 2019-05-27
 ### Fixed
 - Fix incorrect variable region for cross account role 
@@ -22,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix handling secrets after reboot 
 
-
+### Changed
 - Secrets for jenkins moved to /etc/secrets/jenkins/ 
 
 ### Added
