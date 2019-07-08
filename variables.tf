@@ -38,13 +38,13 @@ variable "key_name_prefix" {
 }
 
 variable "ssh_allowed_cidrs" {
-  type        = "list"
+  type        = list(string)
   description = "(Optional) list of cidr ranges to allow SSH access."
   default     = []
 }
 
 variable "http_allowed_cidrs" {
-  type        = "list"
+  type        = list(string)
   description = "(Optional) list of cidr ranges to allow HTTP access."
   default     = []
 }
@@ -55,7 +55,7 @@ variable "iam_policy_names_prefix" {
 }
 
 variable "iam_policy_names" {
-  type        = "list"
+  type        = list(string)
   description = "(Optional) List of IAM policy names to apply to the instance."
 
   default = [
@@ -72,7 +72,7 @@ variable "iam_policy_names" {
 }
 
 variable "tags" {
-  type        = "map"
+  type        = map(string)
   description = "(Optional) A mapping of tags to assign to the resource. A 'Name' tag will be created by default using the input from the 'name' variable."
   default     = {}
 }
@@ -139,3 +139,4 @@ variable "jenkins_additional_jcasc" {
   description = "Path to directory containing aditional Jenkins configuration as code files; empty string is for disable"
   default     = ""
 }
+
