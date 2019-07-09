@@ -3,7 +3,7 @@ provider "http" {
 }
 
 provider "local" {
-  version = " ~> v1.2"
+  version = " ~> v1.3"
 }
 
 provider "null" {
@@ -23,5 +23,5 @@ provider "tls" {
 }
 
 provider "external" {
-  version = " ~> v1.1"
+  version = " ~> v1.2"
 }
