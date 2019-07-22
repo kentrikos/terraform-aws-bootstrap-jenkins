@@ -209,7 +209,7 @@ EOF
 
 # This policy is created only if auto policy creation is allowed (auto_IAM_mode)
 resource "aws_iam_policy" "AssumeJenkinsCrossAccount" {
-  count = var.auto_IAM_mode
+  count = local.auto_IAM_mode
   name = "AssumeJenkinsCrossAccount-${random_id.jenkins.hex}"
   path = var.auto_IAM_path
   policy = data.aws_iam_policy_document.AssumeJenkinsCrossAccount.json
@@ -224,7 +224,7 @@ resource "aws_iam_role_policy_attachment" "jenkins_master_node" {
 # This policy is attached only if auto policy creation is allowed (auto_IAM_mode)
 resource "aws_iam_role_policy_attachment" "jenkins_master_node_cross_account" {
   role = aws_iam_role.jenkins_master_node.name
-  count = var.auto_IAM_mode
+  count = local.auto_IAM_mode
   policy_arn = aws_iam_policy.AssumeJenkinsCrossAccount[0].arn
 }
 

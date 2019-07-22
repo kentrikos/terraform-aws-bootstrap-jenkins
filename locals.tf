@@ -26,7 +26,7 @@ locals {
     export http_proxy="${data.aws_ssm_parameter.proxy_http.value}"
     export https_proxy="${data.aws_ssm_parameter.proxy_https.value}"
     export no_proxy="${data.aws_ssm_parameter.proxy_no.value}"
-    EOC
+EOC
     "
     source /etc/profile.d/http-proxy.sh
   
@@ -39,12 +39,12 @@ EOF
     Environment="HTTP_PROXY=${data.aws_ssm_parameter.proxy_http.value}"
     Environment="HTTPS_PROXY=${data.aws_ssm_parameter.proxy_https.value}"
     Environment="NO_PROXY=${data.aws_ssm_parameter.proxy_no.value}"
-    EOC
+EOC
     "
   
 EOF
 
-
-cross_account_role_name = "KENTRIKOS_${var.region}_${var.product_domain_name}_${var.environment_type}_CrossAccount"
+  cross_account_role_name = "KENTRIKOS_${var.region}_${var.product_domain_name}_${var.environment_type}_CrossAccount"
+  auto_IAM_mode           = var.auto_IAM_mode || var.auto_IAM_mode == "true" ? 1 : 0
 }
 
