@@ -1,4 +1,7 @@
 locals {
+  auto_IAM_mode = var.auto_IAM_mode || var.auto_IAM_mode == "true" ? 1 : 0
+}
+locals {
   name                  = "${var.product_domain_name}-${var.environment_type}-${var.name_suffix}"
   jenkins_no_proxy_list = join("\\n", split(",", data.aws_ssm_parameter.proxy_no.value))
   jenkins_proxy_http = element(
@@ -16,7 +19,7 @@ locals {
   auto_iam_policy_names_sufix = "_${var.region}_${var.product_domain_name}_${var.environment_type}"
 
   iam_policy_names_prefix = var.iam_policy_names_prefix != "" ? var.iam_policy_names_prefix : "/"
-  iam_policy_names_sufix  = var.auto_IAM_mode == 1 ? local.auto_iam_policy_names_sufix : ""
+  iam_policy_names_sufix  = local.auto_IAM_mode == 1 ? local.auto_iam_policy_names_sufix : ""
 
   //  iam_policy_names_list_cross = "${var.iam_cross_account_policy_name != "" ? var.iam_cross_account_policy_name : ""}"
   iam_policy_names_list = local.iam_policy_names_list_local
@@ -45,6 +48,6 @@ EOC
 EOF
 
   cross_account_role_name = "KENTRIKOS_${var.region}_${var.product_domain_name}_${var.environment_type}_CrossAccount"
-  auto_IAM_mode           = var.auto_IAM_mode || var.auto_IAM_mode == "true" ? 1 : 0
+
 }
 
