@@ -8,24 +8,24 @@ resource "tls_private_key" "jenkins_master_node_key" {
 }
 
 resource "aws_key_pair" "jenkins_master_node_key" {
-  key_name_prefix = "${var.key_name_prefix}"
-  public_key      = "${tls_private_key.jenkins_master_node_key.public_key_openssh}"
+  key_name_prefix = var.key_name_prefix
+  public_key      = tls_private_key.jenkins_master_node_key.public_key_openssh
 }
 
 resource "local_file" "public_key_openssh" {
-  depends_on = ["tls_private_key.jenkins_master_node_key"]
-  content    = "${tls_private_key.jenkins_master_node_key.public_key_openssh}"
+  depends_on = [tls_private_key.jenkins_master_node_key]
+  content    = tls_private_key.jenkins_master_node_key.public_key_openssh
   filename   = "${pathexpand("~/.ssh/")}/${aws_key_pair.jenkins_master_node_key.key_name}.pub"
 }
 
 resource "local_file" "private_key_pem" {
-  depends_on = ["tls_private_key.jenkins_master_node_key"]
-  content    = "${tls_private_key.jenkins_master_node_key.private_key_pem}"
+  depends_on = [tls_private_key.jenkins_master_node_key]
+  content    = tls_private_key.jenkins_master_node_key.private_key_pem
   filename   = "${pathexpand("~/.ssh/")}/${aws_key_pair.jenkins_master_node_key.key_name}.pem"
 }
 
 resource "null_resource" "private_key_pem_chmod" {
-  depends_on = ["local_file.private_key_pem"]
+  depends_on = [local_file.private_key_pem]
 
   provisioner "local-exec" {
     command = "chmod 400 ${local_file.private_key_pem.filename}"
@@ -33,15 +33,20 @@ resource "null_resource" "private_key_pem_chmod" {
 }
 
 resource "aws_instance" "jenkins_master_node" {
-  ami                         = "${length(var.ami_id) == 0 ? data.aws_ami.amazon-linux.id : var.ami_id}"
-  instance_type               = "${var.ec2_instance_type}"
-  subnet_id                   = "${var.subnet_id}"
+  ami                         = length(var.ami_id) == 0 ? data.aws_ami.amazon-linux.id : var.ami_id
+  instance_type               = var.ec2_instance_type
+  subnet_id                   = var.subnet_id
   associate_public_ip_address = false
-  vpc_security_group_ids      = ["${aws_security_group.ssh.id}"]
-  key_name                    = "${aws_key_pair.jenkins_master_node_key.key_name}"
-  user_data                   = "${length(var.ami_id) == 0 ? data.template_file.user_data.rendered : ""}"
-  iam_instance_profile        = "${aws_iam_instance_profile.jenkins_master_node.name}"
-  tags                        = "${merge(map("Name", "${local.name}"), var.tags)}"
+  vpc_security_group_ids      = [aws_security_group.ssh.id]
+  key_name                    = aws_key_pair.jenkins_master_node_key.key_name
+  user_data                   = length(var.ami_id) == 0 ? data.template_file.user_data.rendered : ""
+  iam_instance_profile        = aws_iam_instance_profile.jenkins_master_node.name
+  tags = merge(
+    {
+      "Name" = local.name
+    },
+    var.tags,
+  )
 
   root_block_device {
     volume_size = 64
@@ -49,39 +54,42 @@ resource "aws_instance" "jenkins_master_node" {
   }
 
   lifecycle {
-    ignore_changes = ["ami", "user_data"]
+    ignore_changes = [
+      ami,
+      user_data,
+    ]
   }
 }
 
 resource "aws_route53_record" "jenkins_master_node" {
-  zone_id = "${data.aws_route53_zone.selected.zone_id}"
+  zone_id = data.aws_route53_zone.selected.zone_id
   name    = "${var.jenkins_dns_hostname}.${data.aws_route53_zone.selected.name}"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_instance.jenkins_master_node.private_ip}"]
+  records = [aws_instance.jenkins_master_node.private_ip]
 }
 
 # Do the provisioning at this point
 # Do the provisioning at this point
 resource "null_resource" "jenkins_configs" {
-  count = "${var.jenkins_additional_jcasc != "" ? 1 : 0}"
+  count = var.jenkins_additional_jcasc != "" ? 1 : 0
 
   connection {
     type        = "ssh"
     agent       = false
     user        = "ec2-user"
-    host        = "${aws_instance.jenkins_master_node.private_ip}"
-    private_key = "${tls_private_key.jenkins_master_node_key.private_key_pem}"
+    host        = aws_instance.jenkins_master_node.private_ip
+    private_key = tls_private_key.jenkins_master_node_key.private_key_pem
     timeout     = "3m"
   }
 
   provisioner "file" {
     destination = "/tmp/jenkins_configs"
-    source      = "${var.jenkins_additional_jcasc}"
+    source      = var.jenkins_additional_jcasc
   }
 
-  triggers {
-    md5 = "${data.external.trigger-jcasc.result["checksum"]}"
+  triggers = {
+    md5 = data.external.trigger-jcasc.result["checksum"]
   }
 }
 
@@ -90,14 +98,14 @@ resource "null_resource" "node" {
     type        = "ssh"
     agent       = false
     user        = "ec2-user"
-    host        = "${aws_instance.jenkins_master_node.private_ip}"
-    private_key = "${tls_private_key.jenkins_master_node_key.private_key_pem}"
+    host        = aws_instance.jenkins_master_node.private_ip
+    private_key = tls_private_key.jenkins_master_node_key.private_key_pem
     timeout     = "3m"
   }
 
   provisioner "file" {
     destination = "/tmp/etc_sysconfig_jenkins"
-    content     = "${data.template_file.jenkins-sysconfig.rendered}"
+    content     = data.template_file.jenkins-sysconfig.rendered
   }
 
   provisioner "file" {
@@ -112,12 +120,12 @@ resource "null_resource" "node" {
 
   provisioner "file" {
     destination = "/tmp/var_lib_jenkins_jenkins.yaml"
-    content     = "${data.template_file.jenkins-jenkins_yaml.rendered}"
+    content     = data.template_file.jenkins-jenkins_yaml.rendered
   }
 
   provisioner "file" {
     destination = "/tmp/var_lib_jenkins_docker_config"
-    content     = "${data.template_file.docker-config.rendered}"
+    content     = data.template_file.docker-config.rendered
   }
 
   provisioner "file" {
@@ -132,17 +140,17 @@ resource "null_resource" "node" {
 
   provisioner "file" {
     destination = "/tmp/run_secret_git_private_key"
-    source      = "${pathexpand("~/.ssh/id_rsa")}"
+    source      = pathexpand("~/.ssh/id_rsa")
   }
 
   provisioner "file" {
     destination = "/tmp/run_secret_admin_username"
-    content     = "${var.jenkins_admin_username}"
+    content     = var.jenkins_admin_username
   }
 
   provisioner "file" {
     destination = "/tmp/run_secret_admin_password"
-    content     = "${var.jenkins_admin_password}"
+    content     = var.jenkins_admin_password
   }
 
   provisioner "remote-exec" {
@@ -167,15 +175,15 @@ resource "null_resource" "node" {
     ]
   }
 
-  triggers {
-    md5      = "${data.external.trigger.result["checksum"]}"
-    md5jcasc = "${data.external.trigger-jcasc.result["checksum"]}"
+  triggers = {
+    md5      = data.external.trigger.result["checksum"]
+    md5jcasc = data.external.trigger-jcasc.result["checksum"]
   }
 }
 
 resource "aws_iam_instance_profile" "jenkins_master_node" {
   name = "${local.name}-${random_id.jenkins.hex}"
-  role = "${aws_iam_role.jenkins_master_node.name}"
+  role = aws_iam_role.jenkins_master_node.name
 }
 
 resource "aws_iam_role" "jenkins_master_node" {
@@ -196,59 +204,61 @@ resource "aws_iam_role" "jenkins_master_node" {
     ]
 }
 EOF
+
 }
 
 # This policy is created only if auto policy creation is allowed (auto_IAM_mode)
 resource "aws_iam_policy" "AssumeJenkinsCrossAccount" {
-  count  = "${var.auto_IAM_mode}"
-  name   = "AssumeJenkinsCrossAccount-${random_id.jenkins.hex}"
-  path   = "${var.auto_IAM_path}"
-  policy = "${data.aws_iam_policy_document.AssumeJenkinsCrossAccount.json}"
+  count = local.auto_IAM_mode
+  name = "AssumeJenkinsCrossAccount-${random_id.jenkins.hex}"
+  path = var.auto_IAM_path
+  policy = data.aws_iam_policy_document.AssumeJenkinsCrossAccount.json
 }
 
 resource "aws_iam_role_policy_attachment" "jenkins_master_node" {
-  role       = "${aws_iam_role.jenkins_master_node.name}"
-  count      = "${length(split(",",local.iam_policy_names_list))}"
-  policy_arn = "arn:aws:iam::${var.operations_aws_account_number}:policy${local.iam_policy_names_prefix}${element(split(",",local.iam_policy_names_list), count.index)}${local.iam_policy_names_sufix}"
+  role = aws_iam_role.jenkins_master_node.name
+  count = length(split(",", local.iam_policy_names_list))
+  policy_arn = "arn:aws:iam::${var.operations_aws_account_number}:policy${local.iam_policy_names_prefix}${element(split(",", local.iam_policy_names_list), count.index)}${local.iam_policy_names_sufix}"
 }
 
 # This policy is attached only if auto policy creation is allowed (auto_IAM_mode)
 resource "aws_iam_role_policy_attachment" "jenkins_master_node_cross_account" {
-  role       = "${aws_iam_role.jenkins_master_node.name}"
-  count      = "${var.auto_IAM_mode}"
-  policy_arn = "${aws_iam_policy.AssumeJenkinsCrossAccount.arn}"
+  role = aws_iam_role.jenkins_master_node.name
+  count = local.auto_IAM_mode
+  policy_arn = aws_iam_policy.AssumeJenkinsCrossAccount[0].arn
 }
 
 resource "aws_security_group" "ssh" {
-  name        = "jenkins-${random_id.jenkins.hex}"
+  name = "jenkins-${random_id.jenkins.hex}"
   description = "Allow SSH access to instance"
-  vpc_id      = "${var.vpc_id}"
+  vpc_id = var.vpc_id
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = "${var.ssh_allowed_cidrs}"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = var.ssh_allowed_cidrs
   }
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
     cidr_blocks = ["${chomp(data.http.ip_priv.body)}/32"]
   }
 
   ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = "${var.http_allowed_cidrs}"
+    from_port = 8080
+    to_port = 8080
+    protocol = "tcp"
+    cidr_blocks = var.http_allowed_cidrs
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+

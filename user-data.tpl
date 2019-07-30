@@ -40,7 +40,7 @@ systemctl daemon-reload
 service docker restart
 
 #TERRAFORM_VERSION=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d '"' -f 4|cut -c 2-)
-TERRAFORM_VERSION=0.11.11
+TERRAFORM_VERSION=0.12.5
 TERRAFORM_DOWNLOAD_URL="https://releases.hashicorp.com/terraform/$${TERRAFORM_VERSION}/terraform_$${TERRAFORM_VERSION}_linux_amd64.zip"
 wget --quiet "$TERRAFORM_DOWNLOAD_URL" -O terraform.zip
 unzip terraform.zip
