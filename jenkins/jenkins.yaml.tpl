@@ -279,7 +279,7 @@ jobs:
                 branch("vpcesendpoints")
               }
             }
-            scriptPath("operations/vpc_endpoint_service_to_ingress/install/Jenkinsfile")
+            scriptPath("operations/vpc_endpoint_to_vpces/install/Jenkinsfile")
           }
         }
        }
