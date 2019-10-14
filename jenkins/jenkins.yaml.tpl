@@ -443,6 +443,52 @@ jobs:
           }
         }
        }
+      pipelineJob("LMA/Dashboard_Ops_Install") {
+        displayName('Deploy Dashboard in Operations Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        parameters {
+           choiceParam('K8S_FLAVOR',["eks", "kops"],'Choose type of Kubernetes cluster (required for kops)')
+        }
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("vpcesendpoints")
+              }
+            }
+            scriptPath("operations/dashboard/install/Jenkinsfile.groovy")
+          }
+        }
+       }
+      pipelineJob("LMA/Dashboard_Ops_Remove") {
+        displayName('Remove Dashboard in Operations Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        parameters {
+           choiceParam('K8S_FLAVOR',["eks", "kops"],'Choose type of Kubernetes cluster (required for kops)')
+        }
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("vpcesendpoints")
+              }
+            }
+            scriptPath("operations/dashboard/destroy/Jenkinsfile.groovy")
+          }
+        }
+       }
       pipelineJob("LMA/Grafana_Install") {
         displayName('Deploy Grafana in Operations Account')
         description()
