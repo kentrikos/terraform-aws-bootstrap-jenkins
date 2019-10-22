@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2019-10-22
+### Added
+- New jobs for VPC Endpoint Service in ops and app account
+- New jobs for Dashboard in ops account
+- New jobs for Dashboard in app account
+
 ## [1.0.0] - 2019-07-30
 ### Changed
 - Required terraform version updated to `>= 0.12`

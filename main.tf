@@ -209,55 +209,55 @@ EOF
 
 # This policy is created only if auto policy creation is allowed (auto_IAM_mode)
 resource "aws_iam_policy" "AssumeJenkinsCrossAccount" {
-  count = local.auto_IAM_mode
-  name = "AssumeJenkinsCrossAccount-${random_id.jenkins.hex}"
-  path = var.auto_IAM_path
+  count  = local.auto_IAM_mode
+  name   = "AssumeJenkinsCrossAccount-${random_id.jenkins.hex}"
+  path   = var.auto_IAM_path
   policy = data.aws_iam_policy_document.AssumeJenkinsCrossAccount.json
 }
 
 resource "aws_iam_role_policy_attachment" "jenkins_master_node" {
-  role = aws_iam_role.jenkins_master_node.name
-  count = length(split(",", local.iam_policy_names_list))
+  role       = aws_iam_role.jenkins_master_node.name
+  count      = length(split(",", local.iam_policy_names_list))
   policy_arn = "arn:aws:iam::${var.operations_aws_account_number}:policy${local.iam_policy_names_prefix}${element(split(",", local.iam_policy_names_list), count.index)}${local.iam_policy_names_sufix}"
 }
 
 # This policy is attached only if auto policy creation is allowed (auto_IAM_mode)
 resource "aws_iam_role_policy_attachment" "jenkins_master_node_cross_account" {
-  role = aws_iam_role.jenkins_master_node.name
-  count = local.auto_IAM_mode
+  role       = aws_iam_role.jenkins_master_node.name
+  count      = local.auto_IAM_mode
   policy_arn = aws_iam_policy.AssumeJenkinsCrossAccount[0].arn
 }
 
 resource "aws_security_group" "ssh" {
-  name = "jenkins-${random_id.jenkins.hex}"
+  name        = "jenkins-${random_id.jenkins.hex}"
   description = "Allow SSH access to instance"
-  vpc_id = var.vpc_id
+  vpc_id      = var.vpc_id
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = var.ssh_allowed_cidrs
   }
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["${chomp(data.http.ip_priv.body)}/32"]
   }
 
   ingress {
-    from_port = 8080
-    to_port = 8080
-    protocol = "tcp"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
     cidr_blocks = var.http_allowed_cidrs
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

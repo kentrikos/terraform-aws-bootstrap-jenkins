@@ -76,7 +76,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/iam/create/${iam_jobs_path}/Jenkinsfile")
@@ -96,7 +96,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/iam/create/${iam_jobs_path}/Jenkinsfile")
@@ -116,7 +116,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/kubernetes/install_eks/Jenkinsfile")
@@ -136,7 +136,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/kubernetes/destroy_eks/Jenkinsfile")
@@ -156,7 +156,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/kubernetes/install_eks/Jenkinsfile")
@@ -176,7 +176,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/kubernetes/destroy_eks/Jenkinsfile")
@@ -196,7 +196,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/vpc_endpoint_service/install/Jenkinsfile")
@@ -216,10 +216,90 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/vpc_endpoint_service/destroy/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("Infrastructure/Install_VPC_Endpoint_Service_To_Ingress_NLB_Application_Account") {
+        displayName('Deploy VPC Endpoint Service to Ingress NLB in Application Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("0.11.0")
+              }
+            }
+            scriptPath("application/vpc_endpoint_service_to_ingress/install/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("Infrastructure/Remove_VPC_Endpoint_Service_To_Ingress_NLB_Application_Account") {
+        displayName('Remove VPC Endpoint Service to Ingress NLB in Application Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("0.11.0")
+              }
+            }
+            scriptPath("application/vpc_endpoint_service_to_ingress/destroy/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("Infrastructure/Install_VPC_Endpoint_To_VPCES_Operations_Account") {
+        displayName('Deploy VPC Endpoint to VPCES in Operations Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("0.11.0")
+              }
+            }
+            scriptPath("operations/vpc_endpoint_to_vpces/install/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("Infrastructure/Remove_VPC_Endpoint_To_VPCES_Operations_Account") {
+        displayName('Remove VPC Endpoint VPCES in Operations Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("0.11.0")
+              }
+            }
+            scriptPath("operations/vpc_endpoint_service_to_ingress/destroy/Jenkinsfile")
           }
         }
        }
@@ -236,7 +316,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/kubernetes/install_kops/Jenkinsfile")
@@ -256,7 +336,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/kubernetes/destroy_kops/Jenkinsfile")
@@ -276,7 +356,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/kubernetes/install_kops/Jenkinsfile")
@@ -296,7 +376,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/kubernetes/destroy_kops/Jenkinsfile")
@@ -316,7 +396,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/images/jenkins-x-image/Jenkinsfile")
@@ -336,7 +416,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/jx/install/Jenkinsfile")
@@ -356,10 +436,102 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/jx/destroy/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("LMA/Dashboard_Ops_Install") {
+        displayName('Deploy Dashboard in Operations Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        parameters {
+           choiceParam('K8S_FLAVOR',["eks", "kops"],'Choose type of Kubernetes cluster (required for kops)')
+        }
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("0.11.0")
+              }
+            }
+            scriptPath("operations/dashboard/install/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("LMA/Dashboard_Ops_Remove") {
+        displayName('Remove Dashboard in Operations Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        parameters {
+           choiceParam('K8S_FLAVOR',["eks", "kops"],'Choose type of Kubernetes cluster (required for kops)')
+        }
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("0.11.0")
+              }
+            }
+            scriptPath("operations/dashboard/destroy/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("LMA/Dashboard_App_Install") {
+        displayName('Deploy Dashboard in Application Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        parameters {
+           choiceParam('K8S_FLAVOR',["eks", "kops"],'Choose type of Kubernetes cluster (required for kops)')
+        }
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("0.11.0")
+              }
+            }
+            scriptPath("application/dashboard/install/Jenkinsfile")
+          }
+        }
+       }
+      pipelineJob("LMA/Dashboard_App_Remove") {
+        displayName('Remove Dashboard in Application Account')
+        description()
+        disabled(false)
+        keepDependencies(false)
+        parameters {
+           choiceParam('K8S_FLAVOR',["eks", "kops"],'Choose type of Kubernetes cluster (required for kops)')
+        }
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${jenkins_job_repo_url}")
+                  credentials("bitbucket-key")
+                }
+                branch("0.11.0")
+              }
+            }
+            scriptPath("application/dashboard/destroy/Jenkinsfile")
           }
         }
        }
@@ -380,7 +552,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/grafana/install/Jenkinsfile")
@@ -403,7 +575,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/grafana/destroy/Jenkinsfile")
@@ -426,7 +598,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/ingress/install/Jenkinsfile")
@@ -449,7 +621,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/ingress/destroy/Jenkinsfile")
@@ -472,7 +644,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/prometheus/install/Jenkinsfile")
@@ -495,7 +667,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/prometheus/destroy/Jenkinsfile")
@@ -518,7 +690,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/prometheus/install/Jenkinsfile")
@@ -541,7 +713,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/prometheus/destroy/Jenkinsfile")
@@ -587,7 +759,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/logging/install/Jenkinsfile")
@@ -610,7 +782,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("operations/logging/destroy/Jenkinsfile")
@@ -633,7 +805,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/logging/install/Jenkinsfile")
@@ -656,7 +828,7 @@ jobs:
                   url("${jenkins_job_repo_url}")
                   credentials("bitbucket-key")
                 }
-                branch("0.10.0")
+                branch("0.11.0")
               }
             }
             scriptPath("application/logging/destroy/Jenkinsfile")
@@ -669,7 +841,7 @@ unclassified:
     url: http://${jenkins_url}/
   globalLibraries:
     libraries:
-    - defaultVersion: "0.10.0"
+    - defaultVersion: "0.11.0"
       implicit: true
       name: "kentrikos-shared-library"
       retriever:
