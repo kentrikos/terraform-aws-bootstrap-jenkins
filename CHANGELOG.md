@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.1] - 2019-10-31
 ### Changed
-- Bum version of jobs to add fix for dashboard installation in app account
+- Bump version of jobs to add fix for dashboard installation in app account
 
 ## [1.1.0] - 2019-10-22
 ### Added
