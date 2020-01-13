@@ -59,7 +59,7 @@ chmod +x kops-linux-amd64
 mv -i kops-linux-amd64 /usr/bin/kops
 
 export HELM_INSTALL_DIR=/usr/bin
-curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
 
