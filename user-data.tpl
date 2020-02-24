@@ -61,7 +61,7 @@ mv -i kops-linux-amd64 /usr/bin/kops
 export HELM_INSTALL_DIR=/usr/bin
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
 chmod 700 get_helm.sh
-./get_helm.sh
+./get_helm.sh -v 2.16
 
 
 JX_VERSION=1.3.737
