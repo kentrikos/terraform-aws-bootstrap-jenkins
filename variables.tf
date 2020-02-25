@@ -104,7 +104,7 @@ variable "jenkins_admin_password" {
 
 variable "jenkins_job_repo_url" {
   description = "(Optional) Git repo url with Jenkins Jobs"
-  default     = "https://github.com/kentrikos/jenkins-bootstrap-pipelines.git"
+  default     = "https://github.com/kentrikos/jenkins-bootstrap-pipelines.git?ref=helm3-install"
 }
 
 variable "jenkins_config_repo_url" {
